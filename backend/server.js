@@ -11,7 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 const profileRoutes = require("./routes/profileRoutes");
+const medicalRecordRoutes = require("./routes/medicalRecordRoutes");
+
 app.use("/api/test-profile", profileRoutes);
+app.use("/api/records", medicalRecordRoutes);
 
 
 app.get("/", (req, res) => {
