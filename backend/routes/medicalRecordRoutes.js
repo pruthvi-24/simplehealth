@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const MedicalRecord = require("../models/MedicalRecord");
 
-// CREATE Medical Record
+
 router.post("/", async (req, res) => {
   const { profile, images, doctorName, visitDate, notes } = req.body;
 
