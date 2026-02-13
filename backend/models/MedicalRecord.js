@@ -7,10 +7,20 @@ const medicalRecordSchema = new mongoose.Schema(
       ref: "Profile",
       required: true
     },
-    images: {
-      type: [String],   // Array of image URLs
+images: [
+  {
+    url: {
+      type: String,
       required: true
     },
+    public_id: {
+      type: String,
+      required: true
+    }
+  }
+],
+
+
     doctorName: {
       type: String,
       trim: true

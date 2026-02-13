@@ -51,7 +51,10 @@ router.post("/upload", upload.array("images"), async (req, res) => {
       };
 
       const result = await streamUpload(file.buffer);
-      uploadedImages.push(result.secure_url);
+      uploadedImages.push({
+        url: result.secure_url,
+        public_id: result.public_id
+      });
     }
 
     res.status(200).json({ images: uploadedImages });
@@ -62,7 +65,118 @@ router.post("/upload", upload.array("images"), async (req, res) => {
   }
 });
 
+router.post(
+  "/create-with-images",
+  upload.array("images"),
+  async (req, res) => {
+    try {
+      const { profile, doctorName, visitDate, notes } = req.body;
 
+      if (!profile) {
+        return res.status(400).json({ message: "Profile ID required" });
+      }
+
+      const uploadedImages = [];
+
+      for (const file of req.files) {
+        const streamUpload = (buffer) =>
+          new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              { folder: "simplehealth" },
+              (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+              }
+            );
+            streamifier.createReadStream(buffer).pipe(stream);
+          });
+
+        const result = await streamUpload(file.buffer);
+
+        uploadedImages.push({
+          url: result.secure_url,
+          public_id: result.public_id
+        });
+      }
+
+      const newRecord = await MedicalRecord.create({
+        profile,
+        doctorName,
+        visitDate: visitDate || null,
+        notes,
+        images: uploadedImages
+      });
+
+      res.status(201).json(newRecord);
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error creating record" });
+    }
+  }
+);
+
+router.delete("/:recordId/image", async (req, res) => {
+  try {
+    const { recordId } = req.params;
+    const { public_id } = req.body;
+
+    const record = await MedicalRecord.findById(recordId);
+
+    if (!record) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+
+    // 1️⃣ Delete from Cloudinary
+    await cloudinary.uploader.destroy(public_id);
+
+    // 2️⃣ Remove from MongoDB
+    record.images = record.images.filter(
+      img => img.public_id !== public_id
+    );
+
+    await record.save();
+
+    res.status(200).json({ message: "Image deleted successfully" });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error deleting image" });
+  }
+});
+
+
+router.delete("/:recordId/image/:imageId", async (req, res) => {
+  try {
+    const { recordId, imageId } = req.params;
+
+    const record = await MedicalRecord.findById(recordId);
+
+    if (!record) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+
+    const image = record.images.id(imageId);
+
+    if (!image) {
+      return res.status(404).json({ message: "Image not found" });
+    }
+
+    // delete from cloudinary
+    await cloudinary.uploader.destroy(image.public_id);
+
+    // remove from mongo array
+    record.images.pull({ _id: imageId });
+
+    await record.save();
+
+    res.status(200).json({ message: "Image deleted successfully" });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error deleting image" });
+  }
+});
 
 // GET Records by Profile
 router.get("/profile/:profileId", async (req, res) => {
