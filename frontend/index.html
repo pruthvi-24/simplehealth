@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimpleHealth</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="logo">SimpleHealth</span>
+      <div id="userBox" class="user-box hidden">
+        <span id="userName"></span>
+        <button id="logoutBtn" class="btn btn-small">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- AUTH -->
+    <section id="authSection">
+      <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login">Log in</button>
+        <button class="tab-btn" data-tab="register">Create account</button>
+      </div>
+
+      <form id="loginForm" class="card form-card">
+        <h2>Log in</h2>
+        <p id="loginError" class="error hidden"></p>
+        <label>Email
+          <input type="email" id="loginEmail" required>
+        </label>
+        <label>Password
+          <input type="password" id="loginPassword" required>
+        </label>
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </form>
+
+      <form id="registerForm" class="card form-card hidden">
+        <h2>Create account</h2>
+        <p id="registerError" class="error hidden"></p>
+        <label>Name
+          <input type="text" id="registerName" required>
+        </label>
+        <label>Email
+          <input type="email" id="registerEmail" required>
+        </label>
+        <label>Password
+          <input type="password" id="registerPassword" required minlength="6">
+        </label>
+        <button type="submit" class="btn btn-primary">Create account</button>
+      </form>
+    </section>
+
+    <!-- APP (logged in) -->
+    <section id="appSection" class="hidden">
+
+      <div class="columns">
+
+        <!-- Profiles -->
+        <div class="col-profiles">
+          <div class="section-head">
+            <h2>Profiles</h2>
+          </div>
+
+          <ul id="profileList" class="profile-list"></ul>
+
+          <form id="profileForm" class="card form-card">
+            <h3>Add a profile</h3>
+            <p id="profileError" class="error hidden"></p>
+            <label>Name
+              <input type="text" id="profileName" required>
+            </label>
+            <label>Relation
+              <select id="profileRelation" required>
+                <option value="">Select...</option>
+                <option>Self</option>
+                <option>Father</option>
+                <option>Mother</option>
+                <option>Grandfather</option>
+                <option>Grandmother</option>
+                <option>Son</option>
+                <option>Daughter</option>
+                <option>Brother</option>
+                <option>Sister</option>
+                <option>Spouse</option>
+              </select>
+            </label>
+            <button type="submit" class="btn btn-primary">Add profile</button>
+          </form>
+        </div>
+
+        <!-- Records -->
+        <div class="col-records">
+          <div id="recordsEmpty" class="empty-state">
+            <p>Select a profile on the left to see their medical records.</p>
+          </div>
+
+          <div id="recordsPanel" class="hidden">
+            <div class="section-head">
+              <h2 id="recordsTitle">Records</h2>
+            </div>
+
+            <ul id="recordList" class="record-list"></ul>
+
+            <form id="recordForm" class="card form-card">
+              <h3>Add a record</h3>
+              <p id="recordError" class="error hidden"></p>
+              <label>Doctor name
+                <input type="text" id="recordDoctor">
+              </label>
+              <label>Visit date
+                <input type="date" id="recordDate">
+              </label>
+              <label>Notes
+                <textarea id="recordNotes" rows="3"></textarea>
+              </label>
+              <label>Images (reports, prescriptions, etc.)
+                <input type="file" id="recordImages" accept="image/*" multiple>
+              </label>
+              <button type="submit" class="btn btn-primary">Save record</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #222;
+  background: #f5f6f5;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Top bar */
+
+.topbar {
+  background: #2f7a6f;
+  color: #fff;
+}
+
+.topbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+/* Layout */
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 700px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-head {
+  margin-bottom: 12px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Auth tabs */
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  max-width: 400px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab-btn.active {
+  background: #2f7a6f;
+  color: #fff;
+  border-color: #2f7a6f;
+}
+
+/* Cards / forms */
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  max-width: 400px;
+}
+
+.form-card h2, .form-card h3 {
+  margin-top: 0;
+}
+
+.form-card label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #444;
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.error {
+  background: #fbe9e7;
+  border: 1px solid #e0a396;
+  color: #8a3324;
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+/* Buttons */
+
+.btn {
+  border: none;
+  border-radius: 3px;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #2f7a6f;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #276358;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #cfd3d1;
+  color: #333;
+}
+
+.btn-danger {
+  background: #fff;
+  border: 1px solid #c0533f;
+  color: #c0533f;
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #c0533f;
+  color: #fff;
+}
+
+/* Profiles */
+
+.profile-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.profile-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-item:hover {
+  border-color: #2f7a6f;
+}
+
+.profile-item.selected {
+  border-color: #2f7a6f;
+  background: #eef6f4;
+}
+
+.profile-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.profile-relation {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Records */
+
+.empty-state {
+  color: #777;
+  font-size: 14px;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.record-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.record-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.record-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.record-doctor {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.record-date {
+  font-size: 12px;
+  color: #777;
+}
+
+.record-notes {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #333;
+}
+
+.record-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.record-images img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
